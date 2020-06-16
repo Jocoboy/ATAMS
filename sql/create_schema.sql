@@ -1,0 +1,1 @@
+create schema atams default charset utf8mb4;
