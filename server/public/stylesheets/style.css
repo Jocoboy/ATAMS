@@ -1,8 +1,22 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body{
+  background-image: url(../images/bg-login.jpg),
+  repeating-linear-gradient(
+    -45deg,
+    rgb(154, 142, 130),
+    rgb(154, 142, 130) 1%,
+    rgb(148, 137, 126) 1%,
+    rgb(148, 137, 126) 2%
+  );
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-a {
-  color: #00B7FF;
+.page-wrapper {
+  font-family: "黑体", "微软雅黑", Arial, sans-serif;
+  color: #2c3e50;
+}
+
+#page-container {
+  height: 100%;
+  width: 100%;
 }
