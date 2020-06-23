@@ -1,11 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 var favicon = require('serve-favicon');
+var path = require('path');
+var logger = require('morgan');
+var express = require('express');
+var cookieParser = require('cookie-parser');
+var createError = require('http-errors');
 
 var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/login')
 var usersRouter = require('./routes/users');
 
 // 创建服务器
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 路由控制
 app.use('/', indexRouter);
+app.use('/login',loginRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

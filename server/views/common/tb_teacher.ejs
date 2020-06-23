@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-end">
+                <button class="btn btn-success pull-right mb-2">添加记录</button>
+            </div>
+        </div>
+        <table class="table">
+            <caption class="text-white font-weight-bold bg-dark">教师信息表</caption>
+            <tr>
+                <th class="Tno">教师号</th>
+                <th class="Tname">姓名</th>
+                <th class="Tposition">职称</th>
+                <th class="Uop">用户操作</th>
+            </tr>
+            <% for(var i = 0;i<usersData.length;i++){%>
+            <tr>
+                <td><%=usersData[i].Tno%></td>
+                <td><%=usersData[i].Tname%></td>
+                <td><%=usersData[i].Tposition%></td>
+                <td>
+                    <a href="?action=del&id=<%=usersData[i].ID%>" onclick="return confirm('确定删除?')">
+                        <button class="btn btn-danger">删除</button>
+                    </a>
+                    <a href="?action=mod&id=<%=usersData[i].ID%>">
+                        <button class="btn btn-primary">修改</button>
+                    </a>
+                </td>
+            </tr>
+            <%}%>
+        </table>
+    </div>
+</body>
+</html>
