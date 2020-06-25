@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
   <title><%= title %></title>
 </head>
@@ -12,6 +13,7 @@
 <body>
   <div id="app"></div>
   <div class="page-wrapper">
+    <% include common/nav_login.ejs%> 
     <div class="container mt-5" id="page-container">
       <div class="jumbotron jumbotron-fluid bg-dark text-light text-center">
         <div class="container">
@@ -39,19 +41,9 @@
             <label class="custom-control-label" for="customSwitch1">记住密码</label>
           </div>
         </div>
-        <button type="submit" class="btn btn-dark col-md-3 offset-md-3 mb-5" id="btn_login">登录</button>
+        <button type="button" class="btn btn-dark col-md-3 offset-md-3 mb-5" id="btn_login">登录</button>
       </form>
-      <footer class="navbar-fixed-bottom">
-        <div class="container mt-5">
-          <div class="row justify-content-md-center">
-            <p class="text-dark">
-              Copyright
-              <i class="fa fa-copyright" aria-hidden="true"></i>
-              浙江理工大学 版权所有
-            </p>
-          </div>
-        </div>
-      </footer>
+      <% include common/footer.ejs%>  
     </div>
   </div>
 </body>

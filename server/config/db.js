@@ -22,4 +22,4 @@ function query(sql,values,callback){
     });
 }
 
-module.exports  = config;
+module.exports = config;

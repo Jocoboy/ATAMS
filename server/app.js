@@ -3,10 +3,10 @@ var path = require('path');
 var logger = require('morgan');
 var express = require('express');
 var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
 var createError = require('http-errors');
-
 var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login')
+var loginRouter = require('./routes/login');
 var usersRouter = require('./routes/users');
 
 // 创建服务器
@@ -27,13 +27,24 @@ app.use(express.json());  // app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false })); // app.use(bodyParser.urlencoded({ extended: false }))：
 // 加载解析cookie的中间件
 app.use(cookieParser());
+(function (){
+  var arr = [];
+  for(var i = 0 ; i < 10000 ; i++){
+    arr.push('keys_'+Math.random());
+  }
+  app.use(cookieSession({
+      name: 'session_id',
+      keys: arr,
+      maxAge: 20*60*1000 // 最大失效时间，单位毫秒
+  }));
+})();
 // 设置public文件夹为存放静态资源的目录
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 路由控制
 app.use('/', indexRouter);
 app.use('/login',loginRouter);
-app.use('/users', usersRouter);
+app.use('/users',usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
