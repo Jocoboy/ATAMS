@@ -25,7 +25,7 @@ $().ready(()=>{
         if(username && password){
           //  alert("$.ajax前面")
             $.ajax({
-                url: '/login', // 默认值: 当前页地址(发送请求的地址)
+                url: '/login/index', // 默认值: 当前页地址(发送请求的地址)
                 type: 'POST', // 默认值: "GET"。请求方式 ("POST" , "GET" , "PUT" , "DLELETE")，
                 data:{
                     username: username, // 用于响应 HTTP 访问认证请求的用户名
@@ -34,7 +34,18 @@ $().ready(()=>{
 
                 success: (response)=>{ // 请求成功后的回调函数
                   //  alert("success");
-                    window.location.href='/users';
+                    switch(response.data){
+                        case "管理员":
+                             window.location.href='/admin/index';
+                             break;
+                        case "教师":
+                            window.location.href='/teacher/index';
+                             break;
+                        case "学生":
+                            window.location.href='/student/index';
+                        default:
+                            break;
+                    }
                 },
                 error:(response)=>{ // 请求失败时调用此函数
                  //   alert("error");
@@ -55,4 +66,8 @@ $().ready(()=>{
             confirm("用户名和密码不能为空！");
         }
     });
+
+    // $("a[href='/admin/tb_course']").click(()=>{
+    //     window.location.href='/admin/index';
+    // });
 })

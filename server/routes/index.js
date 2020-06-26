@@ -3,8 +3,8 @@ var router = express.Router();
 
 
 router.use(function(req,res,next){
-    if(req.url =='/users' && !req.session['uid']){
-      res.redirect('/login'); 
+    if(req.url =='/admin/index' && !req.session['uid']){
+      res.redirect('/login/index'); 
     }else{
       next();
     }

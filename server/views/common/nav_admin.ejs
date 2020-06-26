@@ -16,25 +16,25 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active mr-5">
-                    <a class="nav-link tool-font-size-24" href="#">首页 <span class="sr-only">(current)</span></a>
+                <li class="nav-item mr-5">
+                    <a class="nav-link tool-font-size-24" href="../">首页 </a>
                 </li>
-                <li class="nav-item dropdown mr-5">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbar_dp_admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      我是管理员超级用户
+                <li class="nav-item  dropdown mr-5">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbar_dp_admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      我是管理员超级用户<span class="sr-only">(current)</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">查询/修改课程表</a>
-                      <a class="dropdown-item" href="#">查询/修改学生信息表</a>
-                      <a class="dropdown-item" href="#">查询/修改教师信息表</a>
-                      <a class="dropdown-item" href="#">查询/修改选修关系表</a>
-                      <a class="dropdown-item" href="#">查询/修改教学关系表</a>
+                      <a class="dropdown-item" href="/admin/tb_course">查询/修改课程表</a>
+                      <a class="dropdown-item" href="/admin/tb_student">查询/修改学生信息表</a>
+                      <a class="dropdown-item" href="/admin/tb_teacher">查询/修改教师信息表</a>
+                      <a class="dropdown-item" href="/admin/tb_sc">查询/修改选修关系表</a>
+                      <a class="dropdown-item" href="/admin/tb_tc">查询/修改教学关系表</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">查询/修改用户表</a>
+                      <a class="dropdown-item" href="/admin/tb_user">查询/修改用户表</a>
                     </div>
                   </li>
                 <li class="nav-item dropdown mr-5">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbar_dp_teacher" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link  disabled  dropdown-toggle" href="#" id="navbar_dp_teacher" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         我是教师
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -43,7 +43,7 @@
                       </div>
                 </li>
                 <li class="nav-item dropdown mr-5">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbar_dp_student" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle  disabled" href="#" id="navbar_dp_student" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         我是学生
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

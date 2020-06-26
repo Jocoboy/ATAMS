@@ -5,9 +5,6 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var createError = require('http-errors');
-var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
-var usersRouter = require('./routes/users');
 
 // 创建服务器
 var app = express();
@@ -41,10 +38,30 @@ app.use(cookieParser());
 // 设置public文件夹为存放静态资源的目录
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 路由控制
-app.use('/', indexRouter);
-app.use('/login',loginRouter);
-app.use('/users',usersRouter);
+/*********************路由控制********************************/
+app.use('/', require('./routes/index'));
+app.use('/login/index',require('./routes/login/index'));
+
+// 管理员超级用户
+app.use('/admin/index',require('./routes/admin/index'));
+app.use('/admin/tb_course',require('./routes/admin/tb_course'));
+app.use('/admin/tb_student',require('./routes/admin/tb_student'));
+app.use('/admin/tb_teacher',require('./routes/admin/tb_teacher'));
+app.use('/admin/tb_sc',require('./routes/admin/tb_sc'));
+app.use('/admin/tb_tc',require('./routes/admin/tb_tc'));
+app.use('/admin/tb_user',require('./routes/admin/tb_user'));
+
+//教师用户
+app.use('/teacher/index',require('./routes/teacher/index'));
+app.use('/teacher/tb_sc',require('./routes/teacher/tb_sc'));
+app.use('/teacher/tb_tc',require('./routes/teacher/tb_tc'));
+
+//学生用户
+app.use('/student/index',require('./routes/student/index'));
+app.use('/student/tb_course',require('./routes/student/tb_course'));
+app.use('/student/tb_sc',require('./routes/student/tb_sc'));
+app.use('/student/tb_tc',require('./routes/student/tb_tc'));
+/*********************路由控制********************************/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

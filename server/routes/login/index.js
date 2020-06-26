@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var db = require('../config/db');
+var db = require('../../config/db');
 
 // 使用连接池，避免开太多的线程，提升性能
 var pool = mysql.createPool(db);
 
 /* 获取登录页面 */
 router.get('/', function(req, res, next) {
-  res.render('login', { title: '浙江理工大学-教务管理系统-登录页面' });
+  res.render('login/index', { title: '浙江理工大学-教务管理系统-登录页面' });
 });
 
 router.post('/',function(req,res){
@@ -27,10 +27,14 @@ router.post('/',function(req,res){
             res.status(400).send({code: 400,data:[], msg: '用户密码错误！'});
            }else{
              req.session['uid'] = rows[0].Uaccount;
-             res.status(200).send({code: 200,data:[], msg: '登录成功！'});
-            //  window.location.href('/users');
-            //  res.redirect('/users');
-            //  res.render('users', { title: '浙江理工大学-教务管理系统-后台管理页面' });
+             res.status(200).send({
+               code: 200,
+               data: rows[0].Utype, 
+               msg: '登录成功！'
+              });
+            //  window.location.href('/admin');
+            //  res.redirect('/admin');
+            //  res.render('admin', { title: '浙江理工大学-教务管理系统-后台管理页面' });
            }
          }
       });
