@@ -1,16 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
     <div class="container">
         <div class="row">
             <div class="col align-self-end">
-                <button class="btn btn-success pull-right mb-2">添加记录</button>
+                <button class="btn btn-success pull-right mb-2 " data-toggle="modal"
+                    data-target="#addModal">添加记录</button>
             </div>
         </div>
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">添加记录</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="?" method="post">
+                            <div class="form-group">
+                                <label for="Cno">课程号</label>
+                                <input type="text" class="form-control" name="Cno" id="Cno" autofocus="autofocus">
+                            </div>
+                            <div class="form-group">
+                                <label for="Cname">课程名</label>
+                                <input type="text" class="form-control" name="Cname" id="Cname">
+                            </div>
+                            <div class="form-group">
+                                <label for="Ctype">课程类型</label>
+                                <input type="text" class="form-control" name="Ctype" id="Ctype">
+                            </div>
+                            <div class="form-group">
+                                <label for="Tno">教师号</label>
+                                <input type="text" class="form-control" name="Tno" id="Tno">
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃添加</button>
+                            <button type="submit" class="btn btn-primary">确认添加</button>
+                        </form>
+                    </div>
+                    <!-- <div class="modal-footer">
+     
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <%if(typeof modData != 'undefined'){%>
+
+        <div class="modal-body">
+            <form action="?" method="post">
+                <input type="hidden" name="modified" value="<%= modData[0].Cno %>">
+                <div class="form-group">
+                    <label for="Cno">课程号</label>
+                    <input type="text" class="form-control" name="Cno" id="Cno" value="<%= modData[0].Cno %>"
+                        autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label for="Cname">课程名</label>
+                    <input type="text" class="form-control" name="Cname" id="Cname" value="<%= modData[0].Cname %>">
+                </div>
+                <div class="form-group">
+                    <label for="Ctype">课程类型</label>
+                    <input type="text" class="form-control" name="Ctype" id="Ctype" value="<%= modData[0].Ctype %>">
+                </div>
+                <div class="form-group">
+                    <label for="Tno">教师号</label>
+                    <input type="text" class="form-control" name="Tno" id="Tno" value="<%= modData[0].Tno %>">
+                </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
+                <button type="submit" class="btn btn-primary">保存修改</button>
+            </form>
+        </div>
+
+        <%}%>
         <table class="table">
             <caption class="text-white font-weight-bold bg-dark">课程表</caption>
             <tr>
@@ -21,22 +90,25 @@
                 <th class="Uop">用户操作</th>
             </tr>
             <% for(var i = 0;i<usersData.length;i++){%>
-            <tr>
-                <td><%=usersData[i].Cno%></td>
-                <td><%=usersData[i].Cname%></td>
-                <td><%=usersData[i].Ctype%></td>
-                <td><%=usersData[i].Tno%></td>
-                <td>
-                    <a href="?action=del&id=<%=usersData[i].ID%>" onclick="return confirm('确定删除?')">
-                        <button class="btn btn-danger">删除</button>
-                    </a>
-                    <a href="?action=mod&id=<%=usersData[i].ID%>">
-                        <button class="btn btn-primary">修改</button>
-                    </a>
-                </td>
-            </tr>
-            <%}%>
+        <tr>
+            <td><%=usersData[i].Cno%></td>
+            <td><%=usersData[i].Cname%></td>
+            <td><%=usersData[i].Ctype%></td>
+            <td><%=usersData[i].Tno%></td>
+            <td>
+                <a href="?action=del&id=<%=usersData[i].Cno%>" onclick="return confirm('确定删除?')">
+                    <button class="btn btn-danger">删除</button>
+                </a>
+                <a href="?action=mod&id=<%=usersData[i].Cno%>">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modModal">修改</button>
+                </a>
+
+            </td>
+        </tr>
+        <%}%>
         </table>
+
     </div>
 </body>
+
 </html>
