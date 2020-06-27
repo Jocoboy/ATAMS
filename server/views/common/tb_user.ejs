@@ -10,9 +10,68 @@
     <div class="container">
         <div class="row">
             <div class="col align-self-end">
-                <button class="btn btn-success pull-right mb-2">添加记录</button>
+                <button class="btn btn-success pull-right mb-2"  data-toggle="modal"
+                data-target="#addModal">添加记录</button>
             </div>
         </div>
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">添加记录</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="?" method="post">
+                        <div class="form-group">
+                            <label for="Uaccount">用户名</label>
+                            <input type="text" class="form-control" name="Uaccount" id="Uaccount" autofocus="autofocus">
+                        </div>
+                        <div class="form-group">
+                            <label for="Upwd">密码</label>
+                            <input type="text" class="form-control" name="Upwd" id="Upwd">
+                        </div>
+                        <div class="form-group">
+                            <label for="Utype">用户类型</label>
+                            <input type="text" class="form-control" name="Utype" id="Utype">
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃添加</button>
+                        <button type="submit" class="btn btn-primary">确认添加</button>
+                    </form>
+                </div>
+                <!-- <div class="modal-footer">
+ 
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <%if(typeof modData != 'undefined'){%>
+
+        <div class="modal-body">
+            <form action="?" method="post">
+                <input type="hidden" name="modified" value="<%= modData[0].Uaccount %>">
+                <div class="form-group">
+                    <label for="Uaccount">用户名</label>
+                    <input type="text" class="form-control" name="Uaccount" id="Uaccount" value="<%= modData[0].Uaccount %>"
+                        autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label for="Upwd">密码</label>
+                    <input type="text" class="form-control" name="Upwd" id="Upwd" value="<%= modData[0].Upwd %>">
+                </div>
+                <div class="form-group">
+                    <label for="Utype">用户类型</label>
+                    <input type="text" class="form-control" name="Utype" id="Utype" value="<%= modData[0].Utype %>">
+                </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
+                <button type="submit" class="btn btn-primary">保存修改</button>
+            </form>
+        </div>
+
+        <%}%>
         <table class="table">
             <caption class="text-white font-weight-bold bg-dark">用户表</caption>
             <tr>
@@ -27,10 +86,10 @@
                 <td><%=usersData[i].Upwd%></td>
                 <td><%=usersData[i].Utype%></td>
                 <td>
-                    <a href="?action=del&id=<%=usersData[i].ID%>" onclick="return confirm('确定删除?')">
+                    <a href="?action=del&id=<%=usersData[i].Uaccount%>" onclick="return confirm('确定删除?')">
                         <button class="btn btn-danger">删除</button>
                     </a>
-                    <a href="?action=mod&id=<%=usersData[i].ID%>">
+                    <a href="?action=mod&id=<%=usersData[i].Uaccount%>">
                         <button class="btn btn-primary">修改</button>
                     </a>
                 </td>
