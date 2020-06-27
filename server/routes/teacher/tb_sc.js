@@ -9,17 +9,6 @@ var pool = mysql.createPool(db);
 
 router.get('/', function (req, res, next) {
   switch (req.query.action) {
-    case 'del':
-      var str = req.query.id.split(',');
-      pool.query('Delete FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,rows){
-        if(err){
-          console.error(err);
-          res.status(500).send({ code: 500, msg: '服务器内部错误！' });
-        }else{
-          res.redirect('/teacher/tb_sc');
-        }
-      });
-      break;
     case 'mod':
       var str = req.query.id.split(',');
       // res.send('mod:'+str[0]+" "+str[1]);
@@ -71,9 +60,7 @@ router.post('/',function(req,res){
     if(Sno && Cno && Grade){
       if(req.body.modified){
         var str = req.body.modified.split(",");
-        pool.query('UPDATE sc SET Sno="'+Sno+
-        '",Cno="'+Cno+
-        '",Grade="'+Grade+'" WHERE Sno="'+str[0]+'" AND Cno="'+str[1]+'"',function(err,rows){
+        pool.query('UPDATE sc SET Grade="'+Grade+'" WHERE Sno="'+str[0]+'" AND Cno="'+str[1]+'"',function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -83,15 +70,6 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO sc (Sno,Cno,Grade) VALUE("'+Sno+'","' +Cno+'","' +Grade+'")',function(err,rows){
-          if(err){
-            console.error(err);
-           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
-          }
-          else{
-            res.redirect('/teacher/tb_sc');
-          }
-        });
       }
     }else{
       res.status(400).send({ code: 400, msg: '参数错误！' }).end();

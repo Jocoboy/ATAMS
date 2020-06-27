@@ -11,38 +11,27 @@ router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
       var str = req.query.id.split(',');
-      pool.query('Delete FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,rows){
+      pool.query('Delete FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'" AND Grade is NULL',function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
         }else{
-          res.redirect('/student/tb_sc');
-        }
-      });
-      break;
-    case 'mod':
-      var str = req.query.id.split(',');
-      // res.send('mod:'+str[0]+" "+str[1]);
-      pool.query('SELECT * FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,modrows){
-        if(err){
-          console.error(err);
-          res.status(500).send({ code: 500, msg: '服务器内部错误！' });
-        }else if(modrows.length==0){
-          res.status(400).send({ code: 400, msg: '记录不存在！' });
-        }else{
-          pool.query('SELECT * FROM sc ', function (err, rows) {
-            if (err) {
+          var results = true;
+          pool.query('SELECT * FROM sc WHERE  Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,rows){
+            if(err){
               console.error(err);
               res.status(500).send({ code: 500, msg: '服务器内部错误！' });
-            } else {
-              // res.send(modrows);
-              res.render('student/tb_sc', {
-                modData: modrows,
-                usersData: rows,
-                title: '浙江理工大学-教务管理系统-后台管理页面'
-              });
+            }else{
+                if(rows.length==0){
+                  results = false;
+                }
             }
           });
+          if(results==false){
+            res.status(400).send({ code: 400, msg: '该条选课记录中已经成绩登记，无法删除！' });
+          } else{
+             res.redirect('/student/tb_sc');
+          }
         }
       });
       break;
@@ -66,14 +55,9 @@ router.post('/',function(req,res){
     // trim()方法用于去掉字符串首尾空格
     var Sno = req.body.Sno.trim();
     var Cno = req.body.Cno.trim();
-    var Grade = req.body.Grade.trim();
 
-    if(Sno && Cno && Grade){
-      if(req.body.modified){
-        var str = req.body.modified.split(",");
-        pool.query('UPDATE sc SET Sno="'+Sno+
-        '",Cno="'+Cno+
-        '",Grade="'+Grade+'" WHERE Sno="'+str[0]+'" AND Cno="'+str[1]+'"',function(err,rows){
+    if(Sno && Cno){
+        pool.query('INSERT INTO sc (Sno,Cno) VALUE("'+Sno+'","' +Cno+'")',function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -83,17 +67,6 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO sc (Sno,Cno,Grade) VALUE("'+Sno+'","' +Cno+'","' +Grade+'")',function(err,rows){
-          if(err){
-            console.error(err);
-           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
-          }
-          else{
-            res.redirect('/student/tb_sc');
-          }
-        });
-      }
-    }else{
       res.status(400).send({ code: 400, msg: '参数错误！' }).end();
     }
 });
