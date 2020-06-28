@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var db = require('../../config/db');
+var common = require('../../lib/common');
 
 // 使用连接池，避免开太多的线程，提升性能
 var pool = mysql.createPool(db);
@@ -14,6 +15,7 @@ router.get('/', function(req, res, next) {
 router.post('/',function(req,res){
     var username = req.body.username;
     var password = req.body.password;
+    var pwd = common.md5(password);
     if(username && password){
       pool.query('SELECT * FROM user WHERE Uaccount="' + username + '"',function(err,rows){
          if(err){
@@ -23,7 +25,7 @@ router.post('/',function(req,res){
          else if (rows.length == 0){
           res.status(400).send({code: 400,data:[], msg: '用户不存在！'});
          }else{
-           if(rows[0].Upwd != password){
+           if(rows[0].Upwd != pwd){
             res.status(400).send({code: 400,data:[], msg: '用户密码错误！'});
            }else{
              req.session['uid'] = rows[0].Uaccount;
@@ -32,6 +34,7 @@ router.post('/',function(req,res){
                data: rows[0].Utype, 
                msg: '登录成功！'
               });
+            // console.error(pwd.length);
             //  window.location.href('/admin');
             //  res.redirect('/admin');
             //  res.render('admin', { title: '浙江理工大学-教务管理系统-后台管理页面' });

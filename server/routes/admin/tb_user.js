@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var db = require('../../config/db');
+var common = require('../../lib/common');
 
 // 使用连接池，避免开太多的线程，提升性能
 var pool = mysql.createPool(db);
@@ -63,7 +64,7 @@ router.get('/', function (req, res, next) {
 router.post('/',function(req,res){
     // trim()方法用于去掉字符串首尾空格
     var Uaccount = req.body.Uaccount.trim();
-    var Upwd = req.body.Upwd.trim();
+    var Upwd = common.md5(req.body.Upwd.trim());
     var Utype = req.body.Utype.trim();
 
     if(Uaccount && Upwd && Utype){
