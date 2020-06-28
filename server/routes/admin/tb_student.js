@@ -10,7 +10,7 @@ var pool = mysql.createPool(db);
 router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
-      pool.query('Delete FROM student WHERE Sno="' + req.query.id+'"',function(err,rows){
+      pool.query('Delete FROM student WHERE Sno=?',[req.query.id],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
       break;
     case 'mod':
       // res.send('mod:'+req.query.id);
-      pool.query('SELECT * FROM student WHERE Sno="'+req.query.id+'"',function(err,modrows){
+      pool.query('SELECT * FROM student WHERE Sno=?',[req.query.id],function(err,modrows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -69,10 +69,7 @@ router.post('/',function(req,res){
 
     if(Sno && Sname && Ssex && Sage){
       if(req.body.modified){
-        pool.query('UPDATE student SET Sno="'+Sno+
-        '",Sname="'+Sname+
-        '",Ssex="'+Ssex+
-        '",Sage="'+Sage+'" WHERE Sno="'+Sno+'"',function(err,rows){
+        pool.query('UPDATE student SET Sno=?,Sname=?,Ssex=?,Sage=? WHERE Sno=?',[Sno,Sname,Ssex,Sage,Sno],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -82,7 +79,7 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO student (Sno,Sname,Ssex,Sage) VALUE("'+Sno+'","' +Sname+'","' +Ssex+'","' +Sage+'")',function(err,rows){
+        pool.query('INSERT INTO student (Sno,Sname,Ssex,Sage) VALUE(?,?,?,?)',[Sno,Sname,Ssex,Sage],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });

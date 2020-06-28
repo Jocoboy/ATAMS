@@ -11,13 +11,13 @@ router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
       var str = req.query.id.split(',');
-      pool.query('Delete FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'" AND Grade is NULL',function(err,rows){
+      pool.query('Delete FROM sc WHERE Sno=? AND Cno =? AND Grade is NULL',[str[0],str[1]],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
         }else{
           var results = true;
-          pool.query('SELECT * FROM sc WHERE  Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,rows){
+          pool.query('SELECT * FROM sc WHERE  Sno=? AND Cno =?',[str[0],str[1]],function(err,rows){
             if(err){
               console.error(err);
               res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -57,7 +57,7 @@ router.post('/',function(req,res){
     var Cno = req.body.Cno.trim();
 
     if(Sno && Cno){
-        pool.query('INSERT INTO sc (Sno,Cno) VALUE("'+Sno+'","' +Cno+'")',function(err,rows){
+        pool.query('INSERT INTO sc (Sno,Cno) VALUE(?,?)',[Sno,Cno],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });

@@ -10,7 +10,7 @@ var pool = mysql.createPool(db);
 router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
-      pool.query('Delete FROM teacher WHERE Tno="' + req.query.id+'"',function(err,rows){
+      pool.query('Delete FROM teacher WHERE Tno=?',[req.query.id],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
       break;
     case 'mod':
       // res.send('mod:'+req.query.id);
-      pool.query('SELECT * FROM teacher WHERE Tno="'+req.query.id+'"',function(err,modrows){
+      pool.query('SELECT * FROM teacher WHERE Tno=?',[req.query.id],function(err,modrows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -68,9 +68,7 @@ router.post('/',function(req,res){
 
     if(Tno && Tname && Tposition){
       if(req.body.modified){
-        pool.query('UPDATE teacher SET Tno="'+Tno+
-        '",Tname="'+Tname+
-        '",Tposition="'+Tposition+'" WHERE Tno="'+Tno+'"',function(err,rows){
+        pool.query('UPDATE teacher SET Tno=?,Tname=?,Tposition=? WHERE Tno=?',[Tno,Tname,Tposition,Tno],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -80,7 +78,7 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO teacher (Tno,Tname,Tposition) VALUE("'+Tno+'","' +Tname+'","' +Tposition+'")',function(err,rows){
+        pool.query('INSERT INTO teacher (Tno,Tname,Tposition) VALUE(?,?,?)',[Tno,Tname,Tposition],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });

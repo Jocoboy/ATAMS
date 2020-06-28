@@ -10,7 +10,7 @@ var pool = mysql.createPool(db);
 router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
-      pool.query('Delete FROM tc WHERE Cno="' + req.query.id+'"',function(err,rows){
+      pool.query('Delete FROM tc WHERE Cno=?',[req.query.id],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
       break;
     case 'mod':
       // res.send('mod:'+req.query.id);
-      pool.query('SELECT * FROM tc WHERE Cno="'+req.query.id+'"',function(err,modrows){
+      pool.query('SELECT * FROM tc WHERE Cno=?',[req.query.id],function(err,modrows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -67,8 +67,7 @@ router.post('/',function(req,res){
 
     if(Cno && Tcontent){
       if(req.body.modified){
-        pool.query('UPDATE tc SET Cno="'+Cno+
-        '",Tcontent="'+Tcontent+'" WHERE Cno="'+Cno+'"',function(err,rows){
+        pool.query('UPDATE tc SET Cno=?,Tcontent=? WHERE Cno=?',[Cno,Tcontent,Cno],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -78,7 +77,7 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO tc (Cno,Tcontent) VALUE("'+Cno+'","' +Tcontent+'")',function(err,rows){
+        pool.query('INSERT INTO tc (Cno,Tcontent) VALUE(?,?)',[Cno,Tcontent],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });

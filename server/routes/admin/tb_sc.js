@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
       var str = req.query.id.split(',');
-      pool.query('Delete FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,rows){
+      pool.query('Delete FROM sc WHERE Sno= ? AND Cno = ?',[str[0],str[1]],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -23,7 +23,7 @@ router.get('/', function (req, res, next) {
     case 'mod':
       var str = req.query.id.split(',');
       // res.send('mod:'+str[0]+" "+str[1]);
-      pool.query('SELECT * FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,modrows){
+      pool.query('SELECT * FROM sc WHERE Sno= ? AND Cno = ?',[str[0],str[1]],function(err,modrows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -71,9 +71,7 @@ router.post('/',function(req,res){
     if(Sno && Cno && Grade){
       if(req.body.modified){
         var str = req.body.modified.split(",");
-        pool.query('UPDATE sc SET Sno="'+Sno+
-        '",Cno="'+Cno+
-        '",Grade="'+Grade+'" WHERE Sno="'+str[0]+'" AND Cno="'+str[1]+'"',function(err,rows){
+        pool.query('UPDATE sc SET Sno=?,Cno= ?,Grade=? WHERE Sno=? AND Cno=?',[Sno,Cno,Grade,str[0],str[1]],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -83,7 +81,7 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO sc (Sno,Cno,Grade) VALUE("'+Sno+'","' +Cno+'","' +Grade+'")',function(err,rows){
+        pool.query('INSERT INTO sc (Sno,Cno,Grade) VALUE(?,?,?)',[Sno,Cno,Grade],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });

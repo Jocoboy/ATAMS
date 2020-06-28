@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
     case 'mod':
       var str = req.query.id.split(',');
       // res.send('mod:'+str[0]+" "+str[1]);
-      pool.query('SELECT * FROM sc WHERE Sno="' + str[0] +'" AND Cno ="'+str[1]+'"',function(err,modrows){
+      pool.query('SELECT * FROM sc WHERE Sno=? AND Cno =?',[str[0],str[1]],function(err,modrows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -60,7 +60,7 @@ router.post('/',function(req,res){
     if(Sno && Cno && Grade){
       if(req.body.modified){
         var str = req.body.modified.split(",");
-        pool.query('UPDATE sc SET Grade="'+Grade+'" WHERE Sno="'+str[0]+'" AND Cno="'+str[1]+'"',function(err,rows){
+        pool.query('UPDATE sc SET Grade=? WHERE Sno=? AND Cno=?',[Grade,str[0],str[1]],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
