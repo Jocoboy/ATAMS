@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 22/06/2020 16:50:30
+ Date: 28/06/2020 22:02:57
 */
 
 SET NAMES utf8mb4;
@@ -38,6 +38,7 @@ CREATE TABLE `course`  (
 INSERT INTO `course` VALUES ('1000000001', 'C程序设计', '必修课', '2010572611254');
 INSERT INTO `course` VALUES ('1000000002', 'Java程序设计', '必修课', '2010572611254');
 INSERT INTO `course` VALUES ('1000000011', '绘画基础', '选修课', '2015572611232');
+INSERT INTO `course` VALUES ('1000000019', '数字媒体技术', '选修课', '2010572611270');
 
 -- ----------------------------
 -- Table structure for sc
@@ -59,7 +60,7 @@ CREATE TABLE `sc`  (
 INSERT INTO `sc` VALUES ('2018329621055', '1000000001', 80);
 INSERT INTO `sc` VALUES ('2018329621055', '1000000011', 83);
 INSERT INTO `sc` VALUES ('2018329621270', '1000000002', 100);
-INSERT INTO `sc` VALUES ('2018329621270', '1000000011', NULL);
+INSERT INTO `sc` VALUES ('2018329621270', '1000000011', 56);
 
 -- ----------------------------
 -- Table structure for student
@@ -96,7 +97,7 @@ CREATE TABLE `tc`  (
 -- ----------------------------
 -- Records of tc
 -- ----------------------------
-INSERT INTO `tc` VALUES ('1000000001', '');
+INSERT INTO `tc` VALUES ('1000000001', '我爱你们!');
 INSERT INTO `tc` VALUES ('1000000002', '请大家12月10号前完成课堂练习');
 INSERT INTO `tc` VALUES ('1000000011', '欢迎选择绘画基础课程！');
 
@@ -126,7 +127,7 @@ INSERT INTO `teacher` VALUES ('2017572607520', '米蓝', '助教');
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `Uaccount` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户账号',
-  `Upwd` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
+  `Upwd` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
   `Utype` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户类型',
   PRIMARY KEY (`Uaccount`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
@@ -134,8 +135,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1000256311325', '888888', '管理员');
-INSERT INTO `user` VALUES ('2010572611254', '160094', '教师');
-INSERT INTO `user` VALUES ('2018329621154', '160012', '学生');
+INSERT INTO `user` VALUES ('1000256311325', '981a8726a7010217e51226212fde210a', '管理员');
+INSERT INTO `user` VALUES ('2010572611254', 'a4ac8b42c509634ff877a71f32e1d73a', '教师');
+INSERT INTO `user` VALUES ('2018329621154', '542545e2014b31b519a4ff7af6cb9064', '学生');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,5 +1,11 @@
 # 教务管理系统-MySQL数据库设计
 
+Express+EJS+Bootstrap+MySQL
+
+![网站预览-前端](preview_web.png)
+
+![网站预览-后台](preview_admin.png)
+
 ## 需求分析
 
 1. 分为学生用户、教师用户、管理员超级用户三种用户类型
@@ -82,3 +88,6 @@ MySQL数据库提供了InnoDB、MyISAM、ndbcluster、MEMORY、FEDERATED、ARCHI
 | G  |generated| Generated Column | 基于其他列的公式生成值的列 |
 
 ## 数据库运行和维护
+
+- 采用`crypto`模块的`MD5`信息摘要算法，将用户密码以暗文形式存储
+- 采用参数化查询，防止SQL注入攻击
