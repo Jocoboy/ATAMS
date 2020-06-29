@@ -22,16 +22,16 @@ router.get('/', function (req, res, next) {
               console.error(err);
               res.status(500).send({ code: 500, msg: '服务器内部错误！' });
             }else{
-                if(rows.length==0){
+                if(rows.length==1){
                   results = false;
+                }
+                if(results==false){
+                  res.status(400).send({ code: 400, msg: '该条选课记录中已经成绩登记，无法删除！' });
+                } else{
+                   res.redirect('/student/tb_sc');
                 }
             }
           });
-          if(results==false){
-            res.status(400).send({ code: 400, msg: '该条选课记录中已经成绩登记，无法删除！' });
-          } else{
-             res.redirect('/student/tb_sc');
-          }
         }
       });
       break;
