@@ -20,12 +20,14 @@
             <caption class="text-white font-weight-bold bg-dark">教师任务表</caption>
             <tr>
                 <th class="Cno">课程号</th>
+                <th class="Cname">课程名</th>
                 <th class="Tcontent">教学任务</th>
                 <th class="Uop">用户操作</th>
             </tr>
             <% for(var i = 0;i<usersData.length;i++){%>
             <tr>
                 <td><%=usersData[i].Cno%></td>
+                <td><%=usersData[i].Cname%></td>
                 <td><%=usersData[i].Tcontent%></td>
                 <td>
                     <a href="#">

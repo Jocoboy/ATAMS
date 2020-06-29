@@ -29,6 +29,12 @@ router.post('/',function(req,res){
             res.status(400).send({code: 400,data:[], msg: '用户密码错误！'});
            }else{
              req.session['uid'] = rows[0].Uaccount;
+             var userKey ='';
+             if(rows[0].Utype != '管理员'){
+               userKey = (rows[0].Utype == '学生'? 'student':'teacher');
+               res.cookie(userKey,rows[0].Uno,{maxAge:1000*3600*24*7,secure:false,path:'/'});
+             }
+             
              res.status(200).send({
                code: 200,
                data: rows[0].Utype, 

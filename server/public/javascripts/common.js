@@ -40,9 +40,11 @@ $().ready(()=>{
                              break;
                         case "教师":
                             window.location.href='/teacher/index';
+                            // $.cookie("tchr",response.data[1],{expires:7,path:'/'});
                              break;
                         case "学生":
                             window.location.href='/student/index';
+                            // $.cookie("stu",response.data[1],{expires:7,path:'/'});
                         default:
                             break;
                     }

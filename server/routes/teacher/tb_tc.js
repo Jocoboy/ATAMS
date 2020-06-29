@@ -45,7 +45,7 @@ router.get('/', function (req, res, next) {
       });
       break;
     default:
-      pool.query('SELECT * FROM tc ', function (err, rows) {
+      pool.query('select tc.Cno,Cname,Tcontent from tc,course where Tno= ? and tc.Cno = course.Cno ',[req.cookies.teacher],function (err, rows) {
         if (err) {
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });

@@ -5,15 +5,11 @@
  from course;
  
 #查询个人成绩
- select Cname,Grade
- from sc,course
- where Sno='2018329621055' and sc.Cno=course.Cno;
+ select Sno, sc.Cno ,Grade from sc,course where Sno=? and sc.Cno=course.Cno
  
 #查询教学任务
 
-select Cname,Tcontent
-from tc,sc,course
-where Sno='2018329621055' and sc.Cno=tc.Cno and sc.Cno=course.Cno;
+select sc.Cno,Cname,Tcontent from tc,sc,course where Sno= ? and sc.Cno=tc.Cno and sc.Cno=course.Cno
 
 #添加选课记录
 
@@ -22,6 +18,14 @@ into sc(Sno,Cno)
 values('2018329621270','1000000011');
 
 -- 教师用户
+
+#查询相关教学任务
+
+select tc.Cno,Cname,Tcontent from tc,course where Tno= ? and tc.Cno = course.Cno 
+
+#查询相关学生成绩记录
+
+select Sno,course.Cno,Grade from sc,course where Tno = ? and sc.Cno=course.Cno
 
 #添加教学任务
 
