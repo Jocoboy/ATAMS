@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var db = require('../../config/db');
+var sql = require('../../lib/mysql');
 
 // 使用连接池，避免开太多的线程，提升性能
 var pool = mysql.createPool(db);
@@ -11,13 +12,13 @@ router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
       var str = req.query.id.split(',');
-      pool.query('Delete FROM sc WHERE Sno=? AND Cno =? AND Grade is NULL',[str[0],str[1]],function(err,rows){
+      pool.query(sql.d_f_sc_w_no2_null,[str[0],str[1]],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
         }else{
           var results = true;
-          pool.query('SELECT * FROM sc WHERE  Sno=? AND Cno =?',[str[0],str[1]],function(err,rows){
+          pool.query(sql.s_all_f_sc_w_no2,[str[0],str[1]],function(err,rows){
             if(err){
               console.error(err);
               res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -37,7 +38,7 @@ router.get('/', function (req, res, next) {
       break;
     default:
       console.error(req.cookies.teacher)
-      pool.query('select Sno, sc.Cno ,Grade from sc,course where Sno=? and sc.Cno=course.Cno', [req.cookies.student],function (err, rows) {
+      pool.query(sql.s3_f2_w1_l1_2, [req.cookies.student],function (err, rows) {
         if (err) {
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -58,7 +59,7 @@ router.post('/',function(req,res){
     var Cno = req.body.Cno.trim();
 
     if(Sno && Cno){
-        pool.query('INSERT INTO sc (Sno,Cno) VALUE(?,?)',[Sno,Cno],function(err,rows){
+        pool.query(sql.i_i_sc_v2,[Sno,Cno],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });

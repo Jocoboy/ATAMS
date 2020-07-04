@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var db = require('../../config/db');
+var sql = require('../../lib/mysql');
 
 // 使用连接池，避免开太多的线程，提升性能
 var pool = mysql.createPool(db);
@@ -10,7 +11,7 @@ var pool = mysql.createPool(db);
 router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
-      pool.query('Delete FROM teacher WHERE Tno=?',[req.query.id],function(err,rows){
+      pool.query(sql.d_f_teacher_w_no,[req.query.id],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -21,14 +22,14 @@ router.get('/', function (req, res, next) {
       break;
     case 'mod':
       // res.send('mod:'+req.query.id);
-      pool.query('SELECT * FROM teacher WHERE Tno=?',[req.query.id],function(err,modrows){
+      pool.query(sql.s_all_f_teacher_w_no,[req.query.id],function(err,modrows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
         }else if(modrows.length==0){
           res.status(400).send({ code: 400, msg: '记录不存在！' });
         }else{
-          pool.query('SELECT * FROM teacher ', function (err, rows) {
+          pool.query(sql.s_all_f_teacher, function (err, rows) {
             if (err) {
               console.error(err);
               res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -45,7 +46,7 @@ router.get('/', function (req, res, next) {
       });
       break;
     default:
-      pool.query('SELECT * FROM teacher ', function (err, rows) {
+      pool.query(sql.s_all_f_teacher, function (err, rows) {
         if (err) {
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -68,7 +69,7 @@ router.post('/',function(req,res){
 
     if(Tno && Tname && Tposition){
       if(req.body.modified){
-        pool.query('UPDATE teacher SET Tno=?,Tname=?,Tposition=? WHERE Tno=?',[Tno,Tname,Tposition,Tno],function(err,rows){
+        pool.query(sql.u_teacher_s3_w_no,[Tno,Tname,Tposition,Tno],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -78,7 +79,7 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO teacher (Tno,Tname,Tposition) VALUE(?,?,?)',[Tno,Tname,Tposition],function(err,rows){
+        pool.query(sql.i_i_teacher_v3,[Tno,Tname,Tposition],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });

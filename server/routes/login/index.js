@@ -3,6 +3,7 @@ var router = express.Router();
 var mysql = require('mysql');
 var db = require('../../config/db');
 var common = require('../../lib/common');
+var sql = require('../../lib/mysql');
 
 // 使用连接池，避免开太多的线程，提升性能
 var pool = mysql.createPool(db);
@@ -17,7 +18,7 @@ router.post('/',function(req,res){
     var password = req.body.password;
     var pwd = common.md5(password);
     if(username && password){
-      pool.query('SELECT * FROM user WHERE Uaccount= ? ',[username],function(err,rows){
+      pool.query(sql.s_all_f_user_w_account,[username],function(err,rows){
          if(err){
           console.error(err);
           res.status(500).send({code: 500,data:[], msg: '服务器内部错误！'});

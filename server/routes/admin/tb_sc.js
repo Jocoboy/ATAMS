@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var db = require('../../config/db');
+var sql = require('../../lib/mysql');
 
 // 使用连接池，避免开太多的线程，提升性能
 var pool = mysql.createPool(db);
@@ -11,7 +12,7 @@ router.get('/', function (req, res, next) {
   switch (req.query.action) {
     case 'del':
       var str = req.query.id.split(',');
-      pool.query('Delete FROM sc WHERE Sno= ? AND Cno = ?',[str[0],str[1]],function(err,rows){
+      pool.query(sql.d_f_sc_w_no2,[str[0],str[1]],function(err,rows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -23,14 +24,14 @@ router.get('/', function (req, res, next) {
     case 'mod':
       var str = req.query.id.split(',');
       // res.send('mod:'+str[0]+" "+str[1]);
-      pool.query('SELECT * FROM sc WHERE Sno= ? AND Cno = ?',[str[0],str[1]],function(err,modrows){
+      pool.query(sql.s_all_f_sc_w_no2,[str[0],str[1]],function(err,modrows){
         if(err){
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
         }else if(modrows.length==0){
           res.status(400).send({ code: 400, msg: '记录不存在！' });
         }else{
-          pool.query('SELECT * FROM sc ', function (err, rows) {
+          pool.query(sql.s_all_f_sc, function (err, rows) {
             if (err) {
               console.error(err);
               res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -47,7 +48,7 @@ router.get('/', function (req, res, next) {
       });
       break;
     default:
-      pool.query('SELECT * FROM sc ', function (err, rows) {
+      pool.query(sql.s_all_f_sc, function (err, rows) {
         if (err) {
           console.error(err);
           res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -71,7 +72,7 @@ router.post('/',function(req,res){
     if(Sno && Cno && Grade){
       if(req.body.modified){
         var str = req.body.modified.split(",");
-        pool.query('UPDATE sc SET Sno=?,Cno= ?,Grade=? WHERE Sno=? AND Cno=?',[Sno,Cno,Grade,str[0],str[1]],function(err,rows){
+        pool.query(sql.u_sc_s3_w_no2,[Sno,Cno,Grade,str[0],str[1]],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
@@ -81,7 +82,7 @@ router.post('/',function(req,res){
           }
         });
       }else{
-        pool.query('INSERT INTO sc (Sno,Cno,Grade) VALUE(?,?,?)',[Sno,Cno,Grade],function(err,rows){
+        pool.query(sql.i_i_sc_v3,[Sno,Cno,Grade],function(err,rows){
           if(err){
             console.error(err);
            res.status(500).send({ code: 500, msg: '服务器内部错误！' });
