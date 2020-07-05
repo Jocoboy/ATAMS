@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+table{
+border-collapse: collapse;
+width: 100%;
+}
+th, td{
+text-align: left;
+padding: 8px;
+}
+tr:nth-child(even){
+background-color: #fafafa;
+}
+th{
+background-color: #7799AA;
+color: white;
+}
+</style>
+</head>
+<body>
+<table>
+<tr><th>数据库名称</th><th>表名称</th><th>表说明</th><th>表类型</th><th>数据库引擎</th><th>序号</th><th>字段名</th><th>数据类型</th><th>允许为空</th><th>自增属性</th><th>编码名称</th><th>默认值</th><th>字段说明</th></tr>
+<tr><td>atams</td><td>course</td><td>课程表</td><td>BASE TABLE</td><td>InnoDB</td><td>1</td><td>Cno</td><td>char(10)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>课程号</td></tr>
+<tr><td>atams</td><td>course</td><td>课程表</td><td>BASE TABLE</td><td>InnoDB</td><td>2</td><td>Cname</td><td>varchar(20)</td><td>YES</td><td></td><td>utf8mb4</td><td></td><td>课程名</td></tr>
+<tr><td>atams</td><td>course</td><td>课程表</td><td>BASE TABLE</td><td>InnoDB</td><td>3</td><td>Ctype</td><td>varchar(5)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>课程类别</td></tr>
+<tr><td>atams</td><td>course</td><td>课程表</td><td>BASE TABLE</td><td>InnoDB</td><td>4</td><td>Tno</td><td>char(13)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>教师号</td></tr>
+<tr><td>atams</td><td>sc</td><td>选课关系表</td><td>BASE TABLE</td><td>InnoDB</td><td>1</td><td>Sno</td><td>char(13)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>学号</td></tr>
+<tr><td>atams</td><td>sc</td><td>选课关系表</td><td>BASE TABLE</td><td>InnoDB</td><td>2</td><td>Cno</td><td>char(10)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>课程号</td></tr>
+<tr><td>atams</td><td>sc</td><td>选课关系表</td><td>BASE TABLE</td><td>InnoDB</td><td>3</td><td>Grade</td><td>tinyint unsigned</td><td>YES</td><td></td><td></td><td></td><td>成绩</td></tr>
+<tr><td>atams</td><td>student</td><td>学生表</td><td>BASE TABLE</td><td>InnoDB</td><td>1</td><td>Sno</td><td>char(13)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>学号</td></tr>
+<tr><td>atams</td><td>student</td><td>学生表</td><td>BASE TABLE</td><td>InnoDB</td><td>2</td><td>Sname</td><td>varchar(10)</td><td>YES</td><td></td><td>utf8mb4</td><td></td><td>姓名</td></tr>
+<tr><td>atams</td><td>student</td><td>学生表</td><td>BASE TABLE</td><td>InnoDB</td><td>3</td><td>Ssex</td><td>char(2)</td><td>NO</td><td></td><td>utf8mb4</td><td>男</td><td>性别</td></tr>
+<tr><td>atams</td><td>student</td><td>学生表</td><td>BASE TABLE</td><td>InnoDB</td><td>4</td><td>Sage</td><td>tinyint unsigned</td><td>NO</td><td></td><td></td><td></td><td>年龄</td></tr>
+<tr><td>atams</td><td>tc</td><td>教学任务表</td><td>BASE TABLE</td><td>InnoDB</td><td>1</td><td>Cno</td><td>char(10)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>课程号</td></tr>
+<tr><td>atams</td><td>tc</td><td>教学任务表</td><td>BASE TABLE</td><td>InnoDB</td><td>2</td><td>Tcontent</td><td>varchar(200)</td><td>YES</td><td></td><td>utf8mb4</td><td></td><td>教学任务</td></tr>
+<tr><td>atams</td><td>teacher</td><td>教师表</td><td>BASE TABLE</td><td>InnoDB</td><td>1</td><td>Tno</td><td>char(13)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>教师号</td></tr>
+<tr><td>atams</td><td>teacher</td><td>教师表</td><td>BASE TABLE</td><td>InnoDB</td><td>2</td><td>Tname</td><td>varchar(10)</td><td>YES</td><td></td><td>utf8mb4</td><td></td><td>姓名</td></tr>
+<tr><td>atams</td><td>teacher</td><td>教师表</td><td>BASE TABLE</td><td>InnoDB</td><td>3</td><td>Tposition</td><td>varchar(3)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>职称</td></tr>
+<tr><td>atams</td><td>user</td><td>用户表</td><td>BASE TABLE</td><td>InnoDB</td><td>1</td><td>Uaccount</td><td>varchar(16)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>用户账号</td></tr>
+<tr><td>atams</td><td>user</td><td>用户表</td><td>BASE TABLE</td><td>InnoDB</td><td>2</td><td>Upwd</td><td>char(32)</td><td>NO</td><td></td><td>utf8mb4</td><td></td><td>用户密码</td></tr>
+<tr><td>atams</td><td>user</td><td>用户表</td><td>BASE TABLE</td><td>InnoDB</td><td>3</td><td>Utype</td><td>varchar(3)</td><td>YES</td><td></td><td>utf8mb4</td><td></td><td>用户类型</td></tr>
+<tr><td>atams</td><td>user</td><td>用户表</td><td>BASE TABLE</td><td>InnoDB</td><td>4</td><td>Uno</td><td>char(13)</td><td>YES</td><td></td><td>utf8mb4</td><td></td><td>学生和教师独有属性列</td></tr>
+</table>
+</body>
+</html>
