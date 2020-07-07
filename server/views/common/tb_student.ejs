@@ -25,19 +25,22 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="?" method="post">
+                        <form action="?" method="post" id="student_form_add">
                             <div class="form-group">
                                 <label for="Sno">学号</label>
                                 <input type="text" class="form-control" name="Sno" id="Sno" autofocus="autofocus">
+                                <div class="invalid-feedback" id="sno-feedback">学号由13个数字组成</div>
                             </div>
                             <div class="form-group">
                                 <label for="Sname">姓名</label>
                                 <input type="text" class="form-control" name="Sname" id="Sname">
+                                <div class="invalid-feedback" id="sname-feedback">学生姓名由2~10个字符组成</div>
                             </div>
                             <div class="form-group">
                                 <label for="Ssex">性别</label>
                                 <select id="Ssex" class="form-control" name="Ssex">
-                                  <option selected>男</option>
+                                    <option selected disabled value="">--选择性别--</option>
+                                  <option>男</option>
                                   <option>女</option>
                                 </select>
                               </div>
@@ -48,6 +51,7 @@
                             <div class="form-group">
                                 <label for="Sage">年龄</label>
                                 <input type="text" class="form-control" name="Sage" id="Sage">
+                                <div class="invalid-feedback" id="sage-feedback">学生年龄由2位数字组成</div>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" >放弃添加</button>
                             <button type="submit" class="btn btn-primary">确认添加</button>
@@ -62,24 +66,31 @@
         <%if(typeof modData != 'undefined'){%>
 
         <div class="modal-body">
-            <form action="?" method="post">
+            <form action="?" method="post" id="student_form_mod">
                 <input type="hidden" name="modified" value="<%= modData[0].Sno %>">
                 <div class="form-group">
                     <label for="Sno">学号</label>
                     <input type="text" class="form-control" name="Sno" id="Sno" value="<%= modData[0].Sno %>"
                         autofocus="autofocus">
+                        <div class="invalid-feedback" id="sno-feedback">学生号由13个数字组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Sname">姓名</label>
                     <input type="text" class="form-control" name="Sname" id="Sname" value="<%= modData[0].Sname %>">
+                    <div class="invalid-feedback" id="sname-feedback">学生姓名由2~10个字符组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Ssex">性别</label>
-                    <input type="text" class="form-control" name="Ssex" id="Ssex" value="<%= modData[0].Ssex %>">
+                    <select id="Ssex" class="form-control" name="Ssex">
+                      <option selected><%= modData[0].Ssex %></option>
+                      <option>男</option>
+                      <option>女</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="Sage">年龄</label>
                     <input type="text" class="form-control" name="Sage" id="Sage" value="<%= modData[0].Sage %>">
+                    <div class="invalid-feedback" id="sage-feedback">学生年龄由2位数字组成</div>
                 </div>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
                 <button type="submit" class="btn btn-primary">保存修改</button>
@@ -115,4 +126,90 @@
         </table>
     </div>
 </body>
+<script src="/javascripts/jquery.min.js"></script>
+<script>
+    $(document).ready(() => {
+        var pattern_sno = /^\d{13}$/;
+        var pattern_sname = /^.{2,10}$/;
+        var pattern_sage= /^\d{2}$/;
+
+        function changeSno(){
+            if (!pattern_sno.test($("#student_form_add input[name='Sno']").val())) {
+                $("#student_form_add input[name='Sno']").removeClass("is-valid");
+                $("#student_form_add input[name='Sno']").addClass("is-invalid");
+            }
+            else {
+                $("#student_form_add input[name='Sno']").removeClass("is-invalid");
+                $("#student_form_add input[name='Sno']").addClass("is-valid");
+            }
+
+            if (!pattern_sno.test($("#student_form_mod input[name='Sno']").val())) {
+                $("#student_form_mod input[name='Sno']").removeClass("is-valid");
+                $("#student_form_mod input[name='Sno']").addClass("is-invalid");
+
+            }
+            else {
+                $("#student_form_mod input[name='Sno']").removeClass("is-invalid");
+                $("#student_form_mod input[name='Sno']").addClass("is-valid");
+            }
+        }
+
+        function changeSname(){
+            if (!pattern_sname.test($("#student_form_add input[name='Sname']").val())) {
+                $("#student_form_add input[name='Sname']").removeClass("is-valid");
+                $("#student_form_add input[name='Sname']").addClass("is-invalid");
+
+            }
+            else {
+                $("#student_form_add input[name='Sname']").removeClass("is-invalid");
+                $("#student_form_add input[name='Sname']").addClass("is-valid");
+            }
+
+            if (!pattern_sname.test($("#student_form_mod input[name='Sname']").val())) {
+                $("#student_form_mod input[name='Sname']").removeClass("is-valid");
+                $("#student_form_mod input[name='Sname']").addClass("is-invalid");
+
+            }
+            else {
+                $("#student_form_mod input[name='Sname']").removeClass("is-invalid");
+                $("#student_form_mod input[name='Sname']").addClass("is-valid");
+            }
+        }
+
+        function changeSage(){
+            if (!pattern_sage.test($("#student_form_add input[name='Sage']").val())) {
+                $("#student_form_add input[name='Sage']").removeClass("is-valid");
+                $("#student_form_add input[name='Sage']").addClass("is-invalid");
+
+            }
+            else {
+                $("#student_form_add input[name='Sage']").removeClass("is-invalid");
+                $("#student_form_add input[name='Sage']").addClass("is-valid");
+            }
+
+            if (!pattern_sage.test($("#student_form_mod input[name='Sage']").val())) {
+                $("#student_form_mod input[name='Sage']").removeClass("is-valid");
+                $("#student_form_mod input[name='Sage']").addClass("is-invalid");
+
+            }
+            else {
+                $("#student_form_mod input[name='Sage']").removeClass("is-invalid");
+                $("#student_form_mod input[name='Sage']").addClass("is-valid");
+            }
+        }
+        changeSno();
+        changeSname()
+        changeSage();
+        
+        $("input[name='Sno']").change(() => {
+            changeSno();
+        });
+        $("input[name='Sname']").change(() => {
+            changeSname()
+        });
+        $("input[name='Sage']").change(() => {
+            changeSage();
+        });
+    })
+</script>
 </html>

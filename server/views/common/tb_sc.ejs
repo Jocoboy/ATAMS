@@ -23,18 +23,21 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="?" method="post">
+                    <form action="?" method="post" id="sc_form_add">
                         <div class="form-group">
                             <label for="Sno">学号</label>
                             <input type="text" class="form-control" name="Sno" id="Sno" autofocus="autofocus">
+                            <div class="invalid-feedback" id="sno-feedback">学号由13个数字组成</div>
                         </div>
                         <div class="form-group">
                             <label for="Cno">课程号</label>
                             <input type="text" class="form-control" name="Cno" id="Cno">
+                            <div class="invalid-feedback" id="cno-feedback">课程号由10位数字组成</div>
                         </div>
                         <div class="form-group">
                             <label for="Grade">成绩</label>
                             <input type="text" class="form-control" name="Grade" id="Grade">
+                            <div class="invalid-feedback" id="grade-feedback">成绩在0~100之间</div>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃添加</button>
                         <button type="submit" class="btn btn-primary">确认添加</button>
@@ -49,20 +52,23 @@
     <%if(typeof modData != 'undefined'){%>
 
         <div class="modal-body">
-            <form action="?" method="post">
+            <form action="?" method="post" id="sc_form_mod">
                 <input type="hidden" name="modified" value="<%= [modData[0].Sno,modData[0].Cno] %>">
                 <div class="form-group">
                     <label for="Sno">学号</label>
                     <input type="text" class="form-control" name="Sno" id="Sno" value="<%= modData[0].Sno %>"
                         autofocus="autofocus">
+                        <div class="invalid-feedback" id="sno-feedback">学号由13个数字组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Cno">课程号</label>
                     <input type="text" class="form-control" name="Cno" id="Cno" value="<%= modData[0].Cno %>">
+                    <div class="invalid-feedback" id="cno-feedback">课程号由10位数字组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Grade">成绩</label>
                     <input type="text" class="form-control" name="Grade" id="Grade" value="<%= modData[0].Grade %>">
+                    <div class="invalid-feedback" id="grade-feedback">成绩在0~100之间</div>
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
                 <button type="submit" class="btn btn-primary">保存修改</button>
@@ -96,4 +102,87 @@
         </table>
     </div>
 </body>
+<script src="/javascripts/jquery.min.js"></script>
+<script>
+     $(document).ready(() => {
+        var pattern_sno = /^\d{13}$/;
+        var pattern_cno = /^\d{10}$/;
+        var pattern_grade = /^(?:[1-9]?\d|100)$/;
+
+        function changeSno(){
+            if (!pattern_sno.test($("#sc_form_add input[name='Sno']").val())) {
+                $("#sc_form_add input[name='Sno']").removeClass("is-valid");
+                $("#sc_form_add input[name='Sno']").addClass("is-invalid");
+            }
+            else {
+                $("#sc_form_add input[name='Sno']").removeClass("is-invalid");
+                $("#sc_form_add input[name='Sno']").addClass("is-valid");
+            }
+
+            if (!pattern_sno.test($("#sc_form_mod input[name='Sno']").val())) {
+                $("#sc_form_mod input[name='Sno']").removeClass("is-valid");
+                $("#sc_form_mod input[name='Sno']").addClass("is-invalid");
+
+            }
+            else {
+                $("#sc_form_mod input[name='Sno']").removeClass("is-invalid");
+                $("#sc_form_mod input[name='Sno']").addClass("is-valid");
+            }
+        }
+
+        function changeCno(){
+            if (!pattern_cno.test($("#sc_form_add input[name='Cno']").val())) {
+                $("#sc_form_add input[name='Cno']").removeClass("is-valid");
+                $("#sc_form_add input[name='Cno']").addClass("is-invalid");
+            }
+            else {
+                $("#sc_form_add input[name='Cno']").removeClass("is-invalid");
+                $("#sc_form_add input[name='Cno']").addClass("is-valid");
+            }
+
+            if (!pattern_cno.test($("#sc_form_mod input[name='Cno']").val())) {
+                $("#sc_form_mod input[name='Cno']").removeClass("is-valid");
+                $("#sc_form_mod input[name='Cno']").addClass("is-invalid");
+            }
+            else {
+                $("#sc_form_mod input[name='Cno']").removeClass("is-invalid");
+                $("#sc_form_mod input[name='Cno']").addClass("is-valid");
+            }
+        }
+
+        function changeGrade(){
+            if (!pattern_grade.test($("#sc_form_add input[name='Grade']").val())) {
+                $("#sc_form_add input[name='Grade']").removeClass("is-valid");
+                $("#sc_form_add input[name='Grade']").addClass("is-invalid");
+            }
+            else {
+                $("#sc_form_add input[name='Grade']").removeClass("is-invalid");
+                $("#sc_form_add input[name='Grade']").addClass("is-valid");
+            }
+
+            if (!pattern_grade.test($("#sc_form_mod input[name='Grade']").val())) {
+                $("#sc_form_mod input[name='Grade']").removeClass("is-valid");
+                $("#sc_form_mod input[name='Grade']").addClass("is-invalid");
+            }
+            else {
+                $("#sc_form_mod input[name='Grade']").removeClass("is-invalid");
+                $("#sc_form_mod input[name='Grade']").addClass("is-valid");
+            }
+        }
+
+        changeSno();
+        changeCno();
+        changeGrade();
+
+        $("input[name='Sno']").change(() => {
+            changeSno();
+        });
+        $("input[name='Cno']").change(() => {
+            changeCno();
+        });
+        $("input[name='Grade']").change(() => {
+            changeGrade();
+        });
+     });
+</script>
 </html>

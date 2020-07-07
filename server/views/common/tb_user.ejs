@@ -25,19 +25,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="?" method="post">
+                    <form action="?" method="post" id="user_form_add">
                         <div class="form-group">
                             <label for="Uaccount">用户名</label>
                             <input type="text" class="form-control" name="Uaccount" id="Uaccount" autofocus="autofocus">
+                            <div class="invalid-feedback" id="uaccount-feedback">用户名不能超过32个字符，格式为：stu@xxx, tchr@xxx, admin@xxx</div>
                         </div>
                         <div class="form-group">
                             <label for="Upwd">密码</label>
                             <input type="password" class="form-control" name="Upwd" id="Upwd">
+                            <div class="invalid-feedback" id="upwd-feedback">用户密码由6~32位字符组成</div>
                         </div>
                         <div class="form-group">
                             <label for="Utype">用户类型</label>
                             <select id="Utype" class="form-control" name="Utype">
-                              <option selected>管理员</option>
+                            <option selected disabled value="">--选择用户类型--</option>
+                              <option>管理员</option>
                               <option>学生</option>
                               <option>教师</option>
                             </select>
@@ -59,20 +62,27 @@
     <%if(typeof modData != 'undefined'){%>
 
         <div class="modal-body">
-            <form action="?" method="post">
+            <form action="?" method="post" id="user_form_mod">
                 <input type="hidden" name="modified" value="<%= modData[0].Uaccount %>">
                 <div class="form-group">
                     <label for="Uaccount">用户名</label>
                     <input type="text" class="form-control" name="Uaccount" id="Uaccount" value="<%= modData[0].Uaccount %>"
                         autofocus="autofocus">
+                        <div class="invalid-feedback" id="uaccount-feedback">用户名不能超过32个字符，格式为：stu@xxx, tchr@xxx, admin@xxx</div>
                 </div>
                 <div class="form-group">
                     <label for="Upwd">密码</label>
                     <input type="password" class="form-control" name="Upwd" id="Upwd" value="<%= modData[0].Upwd %>">
+                    <div class="invalid-feedback" id="upwd-feedback">用户密码由6~32位字符组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Utype">用户类型</label>
-                    <input type="text" class="form-control" name="Utype" id="Utype" value="<%= modData[0].Utype %>">
+                <select id="Utype" class="form-control" name="Utype">
+                    <option selected><%= modData[0].Utype %></option>
+                    <option>管理员</option>
+                    <option>学生</option>
+                    <option>教师</option>
+                  </select>
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
                 <button type="submit" class="btn btn-primary">保存修改</button>
@@ -106,4 +116,62 @@
         </table>
     </div>
 </body>
+<script src="/javascripts/jquery.min.js"></script>
+<script>
+      $(document).ready(() =>{
+        var pattern_uaccount = /^(stu|tchr|admin)@[a-zA-Z0-9]{1,10}$/;
+        var pattern_upwd = /^.{6,32}$/;
+
+        function changeUaccount(){
+            if (!pattern_uaccount.test($("#user_form_add input[name='Uaccount']").val())) {
+                $("#user_form_add input[name='Uaccount']").removeClass("is-valid");
+                $("#user_form_add input[name='Uaccount']").addClass("is-invalid");
+            }
+            else {
+                $("#user_form_add input[name='Uaccount']").removeClass("is-invalid");
+                $("#user_form_add input[name='Uaccount']").addClass("is-valid");
+            }
+
+            if (!pattern_uaccount.test($("#user_form_mod input[name='Uaccount']").val())) {
+                $("#user_form_mod input[name='Uaccount']").removeClass("is-valid");
+                $("#user_form_mod input[name='Uaccount']").addClass("is-invalid");
+
+            }
+            else {
+                $("#user_form_mod input[name='Uaccount']").removeClass("is-invalid");
+                $("#user_form_mod input[name='Uaccount']").addClass("is-valid");
+            }
+        }
+        function changeUpwd(){
+            if (!pattern_upwd.test($("#user_form_add input[name='Upwd']").val())) {
+                $("#user_form_add input[name='Upwd']").removeClass("is-valid");
+                $("#user_form_add input[name='Upwd']").addClass("is-invalid");
+            }
+            else {
+                $("#user_form_add input[name='Upwd']").removeClass("is-invalid");
+                $("#user_form_add input[name='Upwd']").addClass("is-valid");
+            }
+
+            if (!pattern_upwd.test($("#user_form_mod input[name='Upwd']").val())) {
+                $("#user_form_mod input[name='Upwd']").removeClass("is-valid");
+                $("#user_form_mod input[name='Upwd']").addClass("is-invalid");
+
+            }
+            else {
+                $("#user_form_mod input[name='Upwd']").removeClass("is-invalid");
+                $("#user_form_mod input[name='Upwd']").addClass("is-valid");
+            }
+        }
+        changeUaccount();
+        changeUpwd();
+
+        $("input[name='Uaccount']").change(() => {
+            changeUaccount();
+        });
+
+        $("input[name='Upwd']").change(() => {
+            changeUpwd();
+        });
+      });
+</script>
 </html>

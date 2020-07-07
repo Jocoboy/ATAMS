@@ -25,25 +25,29 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="?" method="post">
+                        <form action="?" method="post" id="course_form_add">
                             <div class="form-group">
                                 <label for="Cno">课程号</label>
                                 <input type="text" class="form-control" name="Cno" id="Cno" autofocus="autofocus">
+                                <div class="invalid-feedback" id="cno-feedback">课程号由10位数字组成</div>
                             </div>
                             <div class="form-group">
                                 <label for="Cname">课程名</label>
                                 <input type="text" class="form-control" name="Cname" id="Cname">
+                                <div class="invalid-feedback" id="cname-feedback">课程名由2~20个字符组成</div>
                             </div>
                             <div class="form-group">
                                 <label for="Ctype">课程类型</label>
                                 <select id="Ctype" class="form-control" name="Ctype">
-                                  <option selected>公共基础课</option>
+                                  <option selected disabled value="">--选择课程类型--</option>
+                                  <option>公共基础课</option>
                                   <option>学科基础课</option>
                                   <option>专业课</option>
                                   <option>通识课</option>
                                   <option>实践课</option>
                                   <option>专业基础课</option>
                                 </select>
+                                <div class="invalid-feedback" id="ctype-feedback">请选择课程类型</div>
                               </div>
                             <!-- <div class="form-group">
                                 <label for="Ctype">课程类型</label>
@@ -52,6 +56,7 @@
                             <div class="form-group">
                                 <label for="Tno">教师号</label>
                                 <input type="text" class="form-control" name="Tno" id="Tno">
+                                <div class="invalid-feedback" id="tno-feedback">教师号由13位数字组成</div>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃添加</button>
                             <button type="submit" class="btn btn-primary">确认添加</button>
@@ -66,24 +71,36 @@
         <%if(typeof modData != 'undefined'){%>
 
         <div class="modal-body">
-            <form action="?" method="post">
+            <form action="?" method="post" id="course_form_mod">
                 <input type="hidden" name="modified" value="<%= modData[0].Cno %>">
                 <div class="form-group">
                     <label for="Cno">课程号</label>
                     <input type="text" class="form-control" name="Cno" id="Cno" value="<%= modData[0].Cno %>"
                         autofocus="autofocus">
+                        <div class="invalid-feedback" id="cno-feedback">课程号由10位数字组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Cname">课程名</label>
                     <input type="text" class="form-control" name="Cname" id="Cname" value="<%= modData[0].Cname %>">
+                    <div class="invalid-feedback" id="cname-feedback">课程名由2~20个字符组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Ctype">课程类型</label>
-                    <input type="text" class="form-control" name="Ctype" id="Ctype" value="<%= modData[0].Ctype %>">
+                    <select id="Ctype" class="form-control" name="Ctype">
+                        <option selected><%= modData[0].Ctype %></option>
+                        <option>公共基础课</option>
+                        <option>学科基础课</option>
+                        <option>专业课</option>
+                        <option>通识课</option>
+                        <option>实践课</option>
+                        <option>专业基础课</option>
+                      </select>
+                    <!-- <input type="text" class="form-control" name="Ctype" id="Ctype" value="<%= modData[0].Ctype %>"> -->
                 </div>
                 <div class="form-group">
                     <label for="Tno">教师号</label>
                     <input type="text" class="form-control" name="Tno" id="Tno" value="<%= modData[0].Tno %>">
+                    <div class="invalid-feedback" id="tno-feedback">教师号由13位数字组成</div>
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
                 <button type="submit" class="btn btn-primary">保存修改</button>
@@ -121,5 +138,123 @@
 
     </div>
 </body>
+<script src="/javascripts/jquery.min.js"></script>
+<script>
+    $(document).ready(() => {
+        var pattern_cno = /^\d{10}$/;
+        var pattern_cname = /^.{2,20}$/;
+        var pattern_tno = /^\d{13}$/;
 
+        function changeCno(){
+            if (!pattern_cno.test($("#course_form_add input[name='Cno']").val())) {
+                $("#course_form_add input[name='Cno']").removeClass("is-valid");
+                $("#course_form_add input[name='Cno']").addClass("is-invalid");
+
+            }
+            else {
+                $("#course_form_add input[name='Cno']").removeClass("is-invalid");
+                $("#course_form_add input[name='Cno']").addClass("is-valid");
+            }
+
+            if (!pattern_cno.test($("#course_form_mod input[name='Cno']").val())) {
+                $("#course_form_mod input[name='Cno']").removeClass("is-valid");
+                $("#course_form_mod input[name='Cno']").addClass("is-invalid");
+
+            }
+            else {
+                $("#course_form_mod input[name='Cno']").removeClass("is-invalid");
+                $("#course_form_mod input[name='Cno']").addClass("is-valid");
+            }
+        }
+
+        function changeCname(){
+            if (!pattern_cname.test($("#course_form_add input[name='Cname']").val())) {
+                $("#course_form_add input[name='Cname']").removeClass("is-valid");
+                $("#course_form_add input[name='Cname']").addClass("is-invalid");
+
+            }
+            else {
+                $("#course_form_add input[name='Cname']").removeClass("is-invalid");
+                $("#course_form_add input[name='Cname']").addClass("is-valid");
+            }
+
+            if (!pattern_cname.test($("#course_form_mod input[name='Cname']").val())) {
+                $("#course_form_mod input[name='Cname']").removeClass("is-valid");
+                $("#course_form_mod input[name='Cname']").addClass("is-invalid");
+
+            }
+            else {
+                $("#course_form_mod input[name='Cname']").removeClass("is-invalid");
+                $("#course_form_mod input[name='Cname']").addClass("is-valid");
+            }
+        }
+
+        function changeTno(){
+            if (!pattern_tno.test($("#course_form_add input[name='Tno']").val())) {
+                $("#course_form_add input[name='Tno']").removeClass("is-valid");
+                $("#course_form_add input[name='Tno']").addClass("is-invalid");
+
+            }
+            else {
+                $("#course_form_add input[name='Tno']").removeClass("is-invalid");
+                $("#course_form_add input[name='Tno']").addClass("is-valid");
+            }
+
+            if (!pattern_tno.test($("#course_form_mod input[name='Tno']").val())) {
+                $("#course_form_mod input[name='Tno']").removeClass("is-valid");
+                $("#course_form_mod input[name='Tno']").addClass("is-invalid");
+
+            }
+            else {
+                $("#course_form_mod input[name='Tno']").removeClass("is-invalid");
+                $("#course_form_mod input[name='Tno']").addClass("is-valid");
+            }
+        }
+        changeCno();
+        changeCname()
+        changeTno();
+        
+        $("input[name='Cno']").change(() => {
+            changeCno();
+        });
+        $("input[name='Cname']").change(() => {
+            changeCname()
+        });
+        $("input[name='Tno']").change(() => {
+            changeTno();
+        });
+    })
+</script>
+
+
+<!-- <script>
+    $(document).ready(function(){
+        $('#course_form_mod').bootstrapValidator({
+            message: '输入值不合法',
+            excluded: [':disabled'],
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Cno:{
+                    notEmpty: {
+                            message: '课程号不能为空'
+                        },
+                    stringLength: {
+                            min: 10,
+                            max: 10,
+                            message: '请输入10个字符'
+                        },
+                    regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: '课程号只能由数字组成'
+                        }
+                }
+            }
+        });
+    })
+        
+</script> -->
 </html>

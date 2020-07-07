@@ -23,19 +23,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="?" method="post">
+                    <form action="?" method="post" id="teacher_form_add">
                         <div class="form-group">
                             <label for="Tno">教师号</label>
                             <input type="text" class="form-control" name="Tno" id="Tno" autofocus="autofocus">
+                            <div class="invalid-feedback" id="tno-feedback">教师号由13位数字组成</div>
                         </div>
                         <div class="form-group">
                             <label for="Tname">姓名</label>
                             <input type="text" class="form-control" name="Tname" id="Tname">
+                            <div class="invalid-feedback" id="tname-feedback">教师姓名由2~10个字符组成</div>
                         </div>
                         <div class="form-group">
                             <label for="Tposition">职称</label>
                             <select id="Tposition" class="form-control" name="Tposition">
-                              <option selected>教授</option>
+                              <option selected disabled value="">--选择教师职称--</option>
+                              <option>教授</option>
                               <option>副教授</option>
                               <option>讲师</option>
                               <option>助教</option>
@@ -58,20 +61,29 @@
     <%if(typeof modData != 'undefined'){%>
 
         <div class="modal-body">
-            <form action="?" method="post">
+            <form action="?" method="post" id="teacher_form_mod">
                 <input type="hidden" name="modified" value="<%= modData[0].Tno %>">
                 <div class="form-group">
                     <label for="Tno">教师号</label>
                     <input type="text" class="form-control" name="Tno" id="Tno" value="<%= modData[0].Tno %>"
                         autofocus="autofocus">
+                    <div class="invalid-feedback" id="tno-feedback">教师号由13位数字组成</div>
                 </div>
                 <div class="form-group">
                     <label for="Tname">姓名</label>
                     <input type="text" class="form-control" name="Tname" id="Tname" value="<%= modData[0].Tname %>">
+                    <div class="invalid-feedback" id="tname-feedback">教师姓名由2~10个字符组成</div>
+              
                 </div>
                 <div class="form-group">
                     <label for="Tposition">职称</label>
-                    <input type="text" class="form-control" name="Tposition" id="Tposition" value="<%= modData[0].Tposition %>">
+                    <select id="Tposition" class="form-control" name="Tposition">
+                        <option selected><%= modData[0].Tposition %></option>
+                        <option>教授</option>
+                        <option>副教授</option>
+                        <option>讲师</option>
+                        <option>助教</option>
+                    </select>
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
                 <button type="submit" class="btn btn-primary">保存修改</button>
@@ -105,4 +117,64 @@
         </table>
     </div>
 </body>
+<script src="/javascripts/jquery.min.js"></script>
+<script>
+     $(document).ready(() => {
+        var pattern_tno = /^\d{13}$/;
+        var pattern_tname = /^.{2,10}$/;
+
+        function changeTno(){
+            if (!pattern_tno.test($("#teacher_form_add input[name='Tno']").val())) {
+                $("#teacher_form_add input[name='Tno']").removeClass("is-valid");
+                $("#teacher_form_add input[name='Tno']").addClass("is-invalid");
+            }
+            else {
+                $("#teacher_form_add input[name='Tno']").removeClass("is-invalid");
+                $("#teacher_form_add input[name='Tno']").addClass("is-valid");
+            }
+
+            if (!pattern_tno.test($("#teacher_form_mod input[name='Tno']").val())) {
+                $("#teacher_form_mod input[name='Tno']").removeClass("is-valid");
+                $("#teacher_form_mod input[name='Tno']").addClass("is-invalid");
+
+            }
+            else {
+                $("#teacher_form_mod input[name='Tno']").removeClass("is-invalid");
+                $("#teacher_form_mod input[name='Tno']").addClass("is-valid");
+            }
+        }
+
+        function changeTname(){
+            if (!pattern_tname.test($("#teacher_form_add input[name='Tname']").val())) {
+                $("#teacher_form_add input[name='Tname']").removeClass("is-valid");
+                $("#teacher_form_add input[name='Tname']").addClass("is-invalid");
+
+            }
+            else {
+                $("#teacher_form_add input[name='Tname']").removeClass("is-invalid");
+                $("#teacher_form_add input[name='Tname']").addClass("is-valid");
+            }
+
+            if (!pattern_tname.test($("#teacher_form_mod input[name='Tname']").val())) {
+                $("#teacher_form_mod input[name='Tname']").removeClass("is-valid");
+                $("#teacher_form_mod input[name='Tname']").addClass("is-invalid");
+
+            }
+            else {
+                $("#teacher_form_mod input[name='Tname']").removeClass("is-invalid");
+                $("#teacher_form_mod input[name='Tname']").addClass("is-valid");
+            }
+        }
+
+        changeTno();
+        changeTname()
+        
+        $("input[name='Tno']").change(() => {
+            changeTno();
+        });
+        $("input[name='Tname']").change(() => {
+            changeTname()
+        });
+    })
+</script>
 </html>
