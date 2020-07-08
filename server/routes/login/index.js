@@ -34,6 +34,9 @@ router.post('/',function(req,res){
              if(rows[0].Utype != '管理员'){
                userKey = (rows[0].Utype == '学生'? 'student':'teacher');
                res.cookie(userKey,rows[0].Uno,{maxAge:1000*3600*24*7,secure:false,path:'/'});
+               // for teacher or student to modify password themselves
+               userKey2 = (rows[0].Utype == '学生'? 'student2':'teacher2');
+               res.cookie(userKey2,rows[0].Uaccount,{maxAge:1000*3600*24*7,secure:false,path:'/'});
              }
              
              res.status(200).send({

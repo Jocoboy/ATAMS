@@ -2,6 +2,7 @@ module.exports = {
     i_i_user_v3: 'INSERT INTO user (Uaccount, Upwd, Utype) VALUE(?, ?, ?)',
     d_f_user_w_account: 'Delete FROM user WHERE Uaccount = ?',
     u_user_s3_w_account: 'UPDATE user SET Uaccount = ?, Upwd = ?, Utype = ? WHERE Uaccount = ?',
+    u_user_s1_w_account: 'UPDATE user SET Upwd = ? WHERE Uaccount = ?',
     s_all_f_user: 'SELECT * FROM user',
     s_all_f_user_w_account: 'SELECT * FROM user WHERE Uaccount = ?',
 

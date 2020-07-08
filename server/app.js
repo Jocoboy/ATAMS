@@ -55,12 +55,14 @@ app.use('/admin/tb_user',require('./routes/admin/tb_user'));
 app.use('/teacher/index',require('./routes/teacher/index'));
 app.use('/teacher/tb_sc',require('./routes/teacher/tb_sc'));
 app.use('/teacher/tb_tc',require('./routes/teacher/tb_tc'));
+app.use('/teacher/tb_user',require('./routes/teacher/tb_user'));
 
 //学生用户
 app.use('/student/index',require('./routes/student/index'));
 app.use('/student/tb_course',require('./routes/student/tb_course'));
 app.use('/student/tb_sc',require('./routes/student/tb_sc'));
 app.use('/student/tb_tc',require('./routes/student/tb_tc'));
+app.use('/student/tb_user',require('./routes/student/tb_user'));
 /*********************路由控制********************************/
 
 // catch 404 and forward to error handler
