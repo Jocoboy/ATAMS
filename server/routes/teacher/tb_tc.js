@@ -29,7 +29,7 @@ router.get('/', function (req, res, next) {
         }else if(modrows.length==0){
           res.status(400).send({ code: 400, msg: '记录不存在！' });
         }else{
-          pool.query(sql.s_all_f_tc, function (err, rows) {
+          pool.query(sql.s3_f2_w1_l1_1,[req.cookies.teacher], function (err, rows) {
             if (err) {
               console.error(err);
               res.status(500).send({ code: 500, msg: '服务器内部错误！' });

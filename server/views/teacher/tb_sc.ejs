@@ -19,7 +19,7 @@
     <%if(typeof modData != 'undefined'){%>
 
         <div class="modal-body">
-            <form action="?" method="post">
+            <form action="?" method="post" id="sc_form_mod">
                 <input type="hidden" name="modified" value="<%= [modData[0].Sno,modData[0].Cno] %>">
                 <div class="form-group">
                     <label for="Sno">学号</label>
@@ -33,6 +33,7 @@
                 <div class="form-group">
                     <label for="Grade">成绩</label>
                     <input type="text" class="form-control" name="Grade" id="Grade" value="<%= modData[0].Grade %>">
+                    <div class="invalid-feedback" id="grade-feedback">成绩在0~100之间</div>
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
                 <button type="submit" class="btn btn-primary">保存修改</button>
@@ -68,4 +69,26 @@
 </body>
 <script src="/javascripts/jquery.min.js"></script>
 <script src="/javascripts/bootstrap.min.js"></script>
+<script>
+     $(document).ready(()=>{
+        var pattern_grade = /^(?:[1-9]?\d|100)$/;
+
+        function changeGrade(){
+
+            if (!pattern_grade.test($("#sc_form_mod input[name='Grade']").val())) {
+                $("#sc_form_mod input[name='Grade']").removeClass("is-valid");
+                $("#sc_form_mod input[name='Grade']").addClass("is-invalid");
+            }
+            else {
+                $("#sc_form_mod input[name='Grade']").removeClass("is-invalid");
+                $("#sc_form_mod input[name='Grade']").addClass("is-valid");
+            }
+        }
+
+        changeGrade();
+        $("input[name='Grade']").change(() => {
+            changeGrade();
+        });
+     });
+</script>
 </html>

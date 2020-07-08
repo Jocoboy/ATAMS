@@ -28,7 +28,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="?" method="post">
+                    <form action="?" method="post" id="sc_form_add">
                         <div class="form-group">
                             <label for="Sno">学号</label>
                             <input type="text" class="form-control" name="Sno" id="Sno" autofocus="autofocus" value="<%=usersData[0].Sno%>" readonly>
@@ -36,6 +36,7 @@
                         <div class="form-group">
                             <label for="Cno">课程号</label>
                             <input type="text" class="form-control" name="Cno" id="Cno">
+                            <div class="invalid-feedback" id="cno-feedback">课程号由10位数字组成</div>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃添加</button>
                         <button type="submit" class="btn btn-primary">确认添加</button>
@@ -75,4 +76,26 @@
 </body>
 <script src="/javascripts/jquery.min.js"></script>
 <script src="/javascripts/bootstrap.min.js"></script>
+<script>
+     $(document).ready(() => {
+       
+        var pattern_cno = /^\d{10}$/;
+
+        function changeCno(){
+            if (!pattern_cno.test($("#sc_form_add input[name='Cno']").val())) {
+                $("#sc_form_add input[name='Cno']").removeClass("is-valid");
+                $("#sc_form_add input[name='Cno']").addClass("is-invalid");
+            }
+            else {
+                $("#sc_form_add input[name='Cno']").removeClass("is-invalid");
+                $("#sc_form_add input[name='Cno']").addClass("is-valid");
+            }
+        }
+        changeCno();
+      
+        $("input[name='Cno']").change(() => {
+            changeCno();
+        });
+     });
+</script>
 </html>

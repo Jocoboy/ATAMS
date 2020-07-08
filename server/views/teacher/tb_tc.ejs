@@ -29,15 +29,17 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="?" method="post">
+                                <form action="?" method="post" id="tc_form_add">
                                     <div class="form-group">
                                         <label for="Cno">课程号</label>
                                         <input type="text" class="form-control" name="Cno" id="Cno"
                                             autofocus="autofocus">
+                                            <div class="invalid-feedback" id="cno-feedback">课程号由10位数字组成</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="Tcontent">教学任务</label>
                                         <input type="text" class="form-control" name="Tcontent" id="Tcontent">
+                                        <div class="invalid-feedback" id="tcontent-feedback">教学任务不能超过200个字符</div>
                                     </div>
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃添加</button>
@@ -54,7 +56,7 @@
             <%if(typeof modData != 'undefined'){%>
 
             <div class="modal-body">
-                <form action="?" method="post">
+                <form action="?" method="post" id="tc_form_mod">
                     <input type="hidden" name="modified" value="<%= modData[0].Cno %>">
                     <div class="form-group">
                         <label for="Cno">课程号</label>
@@ -65,6 +67,7 @@
                         <label for="Tcontent">教学任务</label>
                         <input type="text" class="form-control" name="Tcontent" id="Tcontent"
                             value="<%= modData[0].Tcontent %>">
+                            <div class="invalid-feedback" id="tcontent-feedback">教学任务不能超过200个字符</div>
                     </div>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">放弃修改</button>
@@ -101,4 +104,56 @@
 </body>
 <script src="/javascripts/jquery.min.js"></script>
 <script src="/javascripts/bootstrap.min.js"></script>
+<script>
+ $(document).ready(() => {
+        var pattern_cno = /^\d{10}$/;
+        var pattern_tcontent = /^.{0,200}$/;
+
+        function changeCno(){
+            if (!pattern_cno.test($("#tc_form_add input[name='Cno']").val())) {
+                $("#tc_form_add input[name='Cno']").removeClass("is-valid");
+                $("#tc_form_add input[name='Cno']").addClass("is-invalid");
+            }
+            else {
+                $("#tc_form_add input[name='Cno']").removeClass("is-invalid");
+                $("#tc_form_add input[name='Cno']").addClass("is-valid");
+            }
+
+           
+        }
+
+        function changeTcontent(){
+            if (!pattern_tcontent.test($("#tc_form_add input[name='Tcontent']").val())) {
+                $("#tc_form_add input[name='Tcontent']").removeClass("is-valid");
+                $("#tc_form_add input[name='Tcontent']").addClass("is-invalid");
+            }
+            else {
+                $("#tc_form_add input[name='Tcontent']").removeClass("is-invalid");
+                $("#tc_form_add input[name='Tcontent']").addClass("is-valid");
+            }
+
+            if (!pattern_tcontent.test($("#tc_form_mod input[name='Tcontent']").val())) {
+                $("#tc_form_mod input[name='Tcontent']").removeClass("is-valid");
+                $("#tc_form_mod input[name='Tcontent']").addClass("is-invalid");
+            }
+            else {
+                $("#tc_form_mod input[name='Tcontent']").removeClass("is-invalid");
+                $("#tc_form_mod input[name='Tcontent']").addClass("is-valid");
+            }
+        }
+
+
+        changeCno();
+        changeTcontent();
+
+        $("input[name='Cno']").change(() => {
+            changeCno();
+        });
+
+        $("input[name='Tcontent']").change(() => {
+            changeTcontent();
+        });
+     });
+
+</script>
 </html>
