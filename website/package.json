@@ -15,7 +15,7 @@
     "element-ui": "^2.13.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
-    "jquery-validation": "^1.19.2",
+    "jquery-validation": "^1.19.5",
     "popper.js": "^1.16.1",
     "vee-validate": "^3.3.4",
     "vue": "^2.5.2",
